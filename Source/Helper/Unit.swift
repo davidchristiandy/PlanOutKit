@@ -19,7 +19,7 @@ struct Unit {
     /// Map of user inputs.
     let inputs: [String: Any]
 
-    /// Map of overriddes.
+    /// Map of overrides.
     let overrides: [String: Any]
 
     /// Unit values obtained from inputs variable, given unitKeys.
