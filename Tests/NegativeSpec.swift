@@ -1,0 +1,41 @@
+//
+//  NegativeSpec.swift
+//  PlanOutKitTests
+//
+//  Created by David Christiandy on 19/08/19.
+//  Copyright © 2019 Traveloka. All rights reserved.
+//
+
+import Quick
+import Nimble
+@testable import PlanOutKit
+
+final class NegativeSpec: QuickSpec {
+    override func spec() {
+        describe("Negative unary operator") {
+            let op = PlanOutOperation.Negative()
+
+            itBehavesLike(.unaryOperator) { [.op: op] }
+            
+            itBehavesLike(.numericOperator) { [.op: op, .argKeys: [PlanOutOperation.Keys.value.rawValue]] }
+
+            it("turns positive value to negative") {
+                let value = 1
+                let args = [PlanOutOperation.Keys.value.rawValue: value]
+                var result: Double?
+
+                expect { result = try op.execute(args, Interpreter()) }.toNot(throwError())
+                expect(result!).to(equal(-1.0))
+            }
+
+            it("turns negative value to positive") {
+                let value = -300.0
+                let args = [PlanOutOperation.Keys.value.rawValue: value]
+                var result: Double?
+
+                expect { result = try op.execute(args, Interpreter()) }.toNot(throwError())
+                expect(result!).to(equal(300.0))
+            }
+        }
+    }
+}
