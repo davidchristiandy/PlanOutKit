@@ -19,7 +19,9 @@ extension PlanOutOperation {
                 throw OperationError.missingArgs(args: Keys.value.rawValue, type: String(describing: self.self))
             }
 
-            context.set(variableName, value: value)
+            if let evaluatedValue = try context.evaluate(value) {
+                context.set(variableName, value: evaluatedValue)
+            }
             
             return nil
         }

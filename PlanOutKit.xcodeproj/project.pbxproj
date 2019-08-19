@@ -16,6 +16,18 @@
 		FE3C88B7230876B300C59F7C /* PlanOutOpBinaryExamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3C88B6230876B300C59F7C /* PlanOutOpBinaryExamples.swift */; };
 		FE3C88B923087F8F00C59F7C /* PlanOutOpSimpleExamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3C88B823087F8F00C59F7C /* PlanOutOpSimpleExamples.swift */; };
 		FE3C88BC2308872800C59F7C /* SharedBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3C88BB2308872800C59F7C /* SharedBehavior.swift */; };
+		FE520E32230A7790005C44E4 /* CoalesceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE520E1E230A7709005C44E4 /* CoalesceSpec.swift */; };
+		FE520E33230A7799005C44E4 /* ArraySpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE520E20230A7714005C44E4 /* ArraySpec.swift */; };
+		FE520E34230A779E005C44E4 /* ReturnSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE520E22230A7721005C44E4 /* ReturnSpec.swift */; };
+		FE520E35230A77A3005C44E4 /* AndSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE520E24230A7729005C44E4 /* AndSpec.swift */; };
+		FE520E36230A77A7005C44E4 /* ConditionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE520E26230A7735005C44E4 /* ConditionSpec.swift */; };
+		FE520E37230A77AC005C44E4 /* SequenceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE520E28230A7740005C44E4 /* SequenceSpec.swift */; };
+		FE520E38230A77D2005C44E4 /* SetSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE520E2E230A776B005C44E4 /* SetSpec.swift */; };
+		FE520E39230A77D5005C44E4 /* OrSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE520E2C230A7759005C44E4 /* OrSpec.swift */; };
+		FE520E3A230A77D9005C44E4 /* GetSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE520E2A230A774B005C44E4 /* GetSpec.swift */; };
+		FE520E3B230A77E1005C44E4 /* LiteralOperationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE520E30230A778B005C44E4 /* LiteralOperationSpec.swift */; };
+		FE520E3E230ACDAC005C44E4 /* SimpleMockContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE520E3D230ACDAC005C44E4 /* SimpleMockContext.swift */; };
+		FE520E40230ADA81005C44E4 /* AccessibleMockContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE520E3F230ADA81005C44E4 /* AccessibleMockContext.swift */; };
 		FE7D55A12309B40A00736883 /* ProductSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7D55A02309B40A00736883 /* ProductSpec.swift */; };
 		FE7D55A32309B42400736883 /* SumSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7D55A22309B42400736883 /* SumSpec.swift */; };
 		FE7D55A52309B42F00736883 /* MinSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7D55A42309B42F00736883 /* MinSpec.swift */; };
@@ -117,6 +129,18 @@
 		FE3C88B6230876B300C59F7C /* PlanOutOpBinaryExamples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanOutOpBinaryExamples.swift; sourceTree = "<group>"; };
 		FE3C88B823087F8F00C59F7C /* PlanOutOpSimpleExamples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanOutOpSimpleExamples.swift; sourceTree = "<group>"; };
 		FE3C88BB2308872800C59F7C /* SharedBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedBehavior.swift; sourceTree = "<group>"; };
+		FE520E1E230A7709005C44E4 /* CoalesceSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoalesceSpec.swift; sourceTree = "<group>"; };
+		FE520E20230A7714005C44E4 /* ArraySpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArraySpec.swift; sourceTree = "<group>"; };
+		FE520E22230A7721005C44E4 /* ReturnSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnSpec.swift; sourceTree = "<group>"; };
+		FE520E24230A7729005C44E4 /* AndSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AndSpec.swift; sourceTree = "<group>"; };
+		FE520E26230A7735005C44E4 /* ConditionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionSpec.swift; sourceTree = "<group>"; };
+		FE520E28230A7740005C44E4 /* SequenceSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceSpec.swift; sourceTree = "<group>"; };
+		FE520E2A230A774B005C44E4 /* GetSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSpec.swift; sourceTree = "<group>"; };
+		FE520E2C230A7759005C44E4 /* OrSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrSpec.swift; sourceTree = "<group>"; };
+		FE520E2E230A776B005C44E4 /* SetSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetSpec.swift; sourceTree = "<group>"; };
+		FE520E30230A778B005C44E4 /* LiteralOperationSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteralOperationSpec.swift; sourceTree = "<group>"; };
+		FE520E3D230ACDAC005C44E4 /* SimpleMockContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleMockContext.swift; sourceTree = "<group>"; };
+		FE520E3F230ADA81005C44E4 /* AccessibleMockContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibleMockContext.swift; sourceTree = "<group>"; };
 		FE7D55A02309B40A00736883 /* ProductSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductSpec.swift; sourceTree = "<group>"; };
 		FE7D55A22309B42400736883 /* SumSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SumSpec.swift; sourceTree = "<group>"; };
 		FE7D55A42309B42F00736883 /* MinSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinSpec.swift; sourceTree = "<group>"; };
@@ -252,10 +276,20 @@
 		FE3C88BA2308870E00C59F7C /* Test Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				FE520E3C230ACD9E005C44E4 /* Mocks */,
 				FEDAAF662306CFDF00D0733E /* Matchers */,
 				FE3C88BB2308872800C59F7C /* SharedBehavior.swift */,
 			);
 			name = "Test Helpers";
+			sourceTree = "<group>";
+		};
+		FE520E3C230ACD9E005C44E4 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				FE520E3D230ACDAC005C44E4 /* SimpleMockContext.swift */,
+				FE520E3F230ADA81005C44E4 /* AccessibleMockContext.swift */,
+			);
+			name = Mocks;
 			sourceTree = "<group>";
 		};
 		FE77C0612309DD1C00BBBE33 /* Random Specs */ = {
@@ -320,6 +354,16 @@
 		FE9483962309D0A500680456 /* Base Specs */ = {
 			isa = PBXGroup;
 			children = (
+				FE520E1E230A7709005C44E4 /* CoalesceSpec.swift */,
+				FE520E20230A7714005C44E4 /* ArraySpec.swift */,
+				FE520E22230A7721005C44E4 /* ReturnSpec.swift */,
+				FE520E24230A7729005C44E4 /* AndSpec.swift */,
+				FE520E2C230A7759005C44E4 /* OrSpec.swift */,
+				FE520E26230A7735005C44E4 /* ConditionSpec.swift */,
+				FE520E28230A7740005C44E4 /* SequenceSpec.swift */,
+				FE520E2A230A774B005C44E4 /* GetSpec.swift */,
+				FE520E2E230A776B005C44E4 /* SetSpec.swift */,
+				FE520E30230A778B005C44E4 /* LiteralOperationSpec.swift */,
 			);
 			name = "Base Specs";
 			sourceTree = "<group>";
@@ -749,24 +793,35 @@
 			buildActionMask = 2147483647;
 			files = (
 				FEDAAF602306C80600D0733E /* LiteralSpec.swift in Sources */,
+				FE520E3A230A77D9005C44E4 /* GetSpec.swift in Sources */,
 				FE7D55A72309B43900736883 /* MaxSpec.swift in Sources */,
+				FE520E35230A77A3005C44E4 /* AndSpec.swift in Sources */,
 				FEDAAF652306CC2600D0733E /* DefaultSegmentAllocatorSpec.swift in Sources */,
 				FE3C88BC2308872800C59F7C /* SharedBehavior.swift in Sources */,
 				FE3C88B52308766900C59F7C /* GreaterThanOrEqualToSpec.swift in Sources */,
+				FE520E36230A77A7005C44E4 /* ConditionSpec.swift in Sources */,
 				FE7D55A12309B40A00736883 /* ProductSpec.swift in Sources */,
 				FE3C88B923087F8F00C59F7C /* PlanOutOpSimpleExamples.swift in Sources */,
 				FEDAAF692306D22C00D0733E /* LiteralMatchers.swift in Sources */,
 				FE7D55B42309BC9200736883 /* PlanOutOpUnaryExamples.swift in Sources */,
+				FE520E37230A77AC005C44E4 /* SequenceSpec.swift in Sources */,
 				FE7D55BB2309C28C00736883 /* EqualsSpec.swift in Sources */,
 				FE7D55B02309BC5500736883 /* NotSpec.swift in Sources */,
+				FE520E32230A7790005C44E4 /* CoalesceSpec.swift in Sources */,
 				FE7D55AE2309BC4A00736883 /* LengthSpec.swift in Sources */,
 				FE3C88AC2308760F00C59F7C /* PlanOutOpComparisonExamples.swift in Sources */,
+				FE520E34230A779E005C44E4 /* ReturnSpec.swift in Sources */,
+				FE520E3E230ACDAC005C44E4 /* SimpleMockContext.swift in Sources */,
 				FE9483942309D00500680456 /* IndexSpec.swift in Sources */,
 				FEDAAF6F23071E2E00D0733E /* NamespaceSpec.swift in Sources */,
 				FE3C88AF2308764600C59F7C /* LessThanSpec.swift in Sources */,
+				FE520E3B230A77E1005C44E4 /* LiteralOperationSpec.swift in Sources */,
 				FE3C88B32308765D00C59F7C /* LessThanOrEqualToSpec.swift in Sources */,
 				FE7D55A52309B42F00736883 /* MinSpec.swift in Sources */,
+				FE520E38230A77D2005C44E4 /* SetSpec.swift in Sources */,
 				FE7D55A92309B48200736883 /* PlanOutOpCommutativeExamples.swift in Sources */,
+				FE520E39230A77D5005C44E4 /* OrSpec.swift in Sources */,
+				FE520E33230A7799005C44E4 /* ArraySpec.swift in Sources */,
 				FE7D55A32309B42400736883 /* SumSpec.swift in Sources */,
 				FE7D55BD2309C34400736883 /* NumericOperatorExamples.swift in Sources */,
 				FEDAAF7523071EE200D0733E /* ExposureLogSpec.swift in Sources */,
@@ -774,6 +829,7 @@
 				FE7D55B92309C28200736883 /* DivideSpec.swift in Sources */,
 				FE3C88B12308765200C59F7C /* GreaterThanSpec.swift in Sources */,
 				FE9483952309D03100680456 /* MapSpec.swift in Sources */,
+				FE520E40230ADA81005C44E4 /* AccessibleMockContext.swift in Sources */,
 				FEDAAF7323071E4A00D0733E /* ExperimentDefinitionSpec.swift in Sources */,
 				FE7D55AC2309BC4100736883 /* NegativeSpec.swift in Sources */,
 				FE7D55B72309C27B00736883 /* ModSpec.swift in Sources */,

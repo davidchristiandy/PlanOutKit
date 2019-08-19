@@ -15,7 +15,8 @@ extension PlanOutOperation {
             }
 
             for value in values {
-                if !Literal(value).boolValue {
+                if let evaluated = try context.evaluate(value),
+                    !Literal(evaluated).boolValue {
                     return false
                 }
             }

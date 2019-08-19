@@ -12,7 +12,7 @@ extension PlanOutOperation {
         typealias ResultType = Any
 
         func execute(_ args: [String : Any], _ context: PlanOutOpContext) throws -> Any? {
-            return args[Keys.variable.rawValue]
+            return args[Keys.value.rawValue]
         }
     }
 }

@@ -12,8 +12,9 @@ extension PlanOutOperation {
         func execute(_ args: [String : Any], _ context: PlanOutOpContext) throws -> Any? {
             var shouldLogExposure: Bool = false
 
-            if let value = args[Keys.value.rawValue] {
-                shouldLogExposure = Literal(value).boolValue
+            if let value = args[Keys.value.rawValue],
+                let evaluatedValue = try context.evaluate(value) {
+                shouldLogExposure = Literal(evaluatedValue).boolValue
             }
 
             throw OperationError.stop(shouldLogExposure)
