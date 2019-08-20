@@ -42,8 +42,8 @@ extension DefaultSegmentAllocator: SegmentAllocator {
     }
 
     init(totalSegments: Int,
-         sampler: @escaping SamplerFunction,
-         randomizer: @escaping RandomizerFunction) {
+         sampler: @escaping SamplerFunction = PlanOutOperation.Sample.quickEval,
+         randomizer: @escaping RandomizerFunction = PlanOutOperation.RandomInteger.quickEval) {
         self.totalSegments = totalSegments
         self.sampler = sampler
         self.randomizer = randomizer
@@ -67,7 +67,7 @@ extension DefaultSegmentAllocator: SegmentAllocator {
             throw SegmentAllocationError.outOfSegments(requested: segments.count, available: availableSegmentPool.count)
         } else if allocationMap[name] != nil {
             throw SegmentAllocationError.duplicateIdentifier(name)
-        } else if !availableSegmentPool.isStrictSuperset(of: segments) {
+        } else if !availableSegmentPool.isSuperset(of: segments) {
             throw SegmentAllocationError.requestedSegmentsNotAvailable
         }
 
@@ -83,11 +83,6 @@ extension DefaultSegmentAllocator: SegmentAllocator {
     mutating func deallocate(_ name: String) throws {
         guard let allocatedSegments: Set<Int> = allocationMap[name] else {
             return
-        }
-
-        // ensure that the segments to deallocate must not exist in the available segment pool.
-        guard !allocatedSegments.isStrictSubset(of: availableSegmentPool) else {
-            throw SegmentAllocationError.invalidDeallocation
         }
 
         // restore freed segments to the availableSegments.
