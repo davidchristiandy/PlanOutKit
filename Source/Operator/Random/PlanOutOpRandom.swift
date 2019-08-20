@@ -11,6 +11,10 @@ import CommonCrypto
 class PlanOutOpRandom<T>: PlanOutOpSimple {
     typealias ResultType = T
 
+
+    /// Used to calculate the random
+    private let longScale: Double = 0xFFFFFFFFFFFFFFF
+
     var context: PlanOutOpContext?
     var args: [String: Any] = [:]
 
@@ -27,10 +31,11 @@ class PlanOutOpRandom<T>: PlanOutOpSimple {
     }
 
     private var salt: String? {
-        guard let argSalt = self.argSalt, let context = self.context else {
+        guard let context = self.context else {
             return nil
         }
 
+        let argSalt = self.argSalt ?? ""
         return self.fullSalt ?? SaltProvider.generate(values: [context.experimentSalt, argSalt])
     }
 
@@ -75,7 +80,8 @@ class PlanOutOpRandom<T>: PlanOutOpSimple {
         // compute hash value:
         // - convert "<salt>.<unit>" to SHA1, and get the first 16 characters.
         // - convert hashed hexadecimal string to integer value.
-        let hashValue = SaltProvider.generate(values: [salt, unitValue])
+        let baseValue = SaltProvider.generate(values: [salt, unitValue])
+        let hashValue = String(baseValue.sha1().prefix(15)) // take the first 15 characters of SHA1.
         guard let numericHash = Int(hashValue, radix: 16) else {
             throw OperationError.invalidArgs(expected: "hashable value", got: String(hashValue))
         }
@@ -84,7 +90,7 @@ class PlanOutOpRandom<T>: PlanOutOpSimple {
     }
 
     func getUniform(minValue: Double = 0.0, maxValue: Double = 1.0, appendedUnit: Any? = nil) throws -> Double {
-        let zeroToOne = try Double(hash(appendedUnit: appendedUnit)) / Double.greatestFiniteMagnitude
+        let zeroToOne = try Double(hash(appendedUnit: appendedUnit)) / longScale
 
         return minValue + (maxValue - minValue) * zeroToOne
     }

@@ -19,6 +19,10 @@ extension PlanOutOperation {
             let minInt = Int(minNumber)
             let maxInt = Int(maxNumber)
 
+            guard minInt <= maxInt else {
+                throw OperationError.invalidArgs(expected: "min <= max", got: "min: \(minInt) max: \(maxInt)")
+            }
+
             return minInt + (try hash() % (maxInt - minInt + 1))
         }
 
@@ -37,7 +41,7 @@ extension PlanOutOperation {
                 Keys.salt.rawValue: "x" // uses arbitrary string as salt.
             ]
 
-            return try? self.init().execute(args, Interpreter())
+            return try! self.init().execute(args, Interpreter())
         }
     }
 }

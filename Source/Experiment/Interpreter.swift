@@ -138,7 +138,7 @@ extension Interpreter: PlanOutOpContext {
         return try self.get(ReservedNames.data.rawValue, defaultValue: [:])
     }
 
-    func set(_ name: String, value: Any) {
+    func set(_ name: String, value: Any) throws {
         // allow changing reserved values
         if let reserved = ReservedNames(rawValue: name) {
             switch reserved {
@@ -167,14 +167,13 @@ extension Interpreter: PlanOutOpContext {
             return
         }
 
-        // create a slightly modified input parameter with added salt parameter.
-        // special handling if value is potentially PlanOutRandom operator.
-        let saltedArgs = inputs.merging([PlanOutOperation.Keys.salt.rawValue: name]) { current, _ in current }
-        if let op = value as? PlanOutExecutable, op.isRandomOperator,
-            let evaluatedValue = try? op.executeOp(args: saltedArgs, context: self) {
-            data[name] = evaluatedValue
+        // special handling if value is potentially PlanOutRandom operator instance with args, for testing purposes.
+        if let tuple = value as? (op: PlanOutExecutable, args: [String: Any]), tuple.op.isRandomOperator {
+            // modify arguments with added salt parameter.
+            // add salt value if it does not exist yet, with variable name as salt.
+            let saltedArgs = tuple.args.merging([PlanOutOperation.Keys.salt.rawValue: name]) { current, _ in current }
+            data[name] = try tuple.op.executeOp(args: saltedArgs, context: self)
         } else {
-            // assign the literal value directly.
             data[name] = value
         }
     }

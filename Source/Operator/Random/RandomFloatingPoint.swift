@@ -14,8 +14,8 @@ extension PlanOutOperation {
                     throw OperationError.missingArgs(args: "\(Keys.min.rawValue),\(Keys.max.rawValue)", type: self)
             }
 
-            guard minValue < maxValue else {
-                throw OperationError.invalidArgs(expected: "minValue < maxValue", got: "min: \(minValue), max: \(maxValue)")
+            guard minValue <= maxValue else {
+                throw OperationError.invalidArgs(expected: "minValue <= maxValue", got: "min: \(minValue), max: \(maxValue)")
             }
 
             return try getUniform(minValue: minValue, maxValue: maxValue)

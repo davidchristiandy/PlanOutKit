@@ -20,7 +20,7 @@ extension PlanOutOperation {
             }
 
             if let evaluatedValue = try context.evaluate(value) {
-                context.set(variableName, value: evaluatedValue)
+                try context.set(variableName, value: evaluatedValue)
             }
             
             return nil

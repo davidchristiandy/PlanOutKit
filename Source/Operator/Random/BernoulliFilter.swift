@@ -25,7 +25,7 @@ extension PlanOutOperation {
 
             // based on the implementation in Python and planout4j, having nil or empty choices returns empty array instead of throwing and error.
             guard let choices = args[Keys.choices.rawValue] as? [Any], !choices.isEmpty else {
-                return nil
+                return []
             }
 
             // filter the list of arrays based on bernoulli trial on each elements.

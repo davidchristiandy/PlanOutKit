@@ -45,5 +45,5 @@ public protocol PlanOutOpContext: ReadableAssignment {
     /// - Parameters:
     ///   - name: The variable name
     ///   - value: The variable value
-    func set(_ name: String, value: Any)
+    func set(_ name: String, value: Any) throws
 }

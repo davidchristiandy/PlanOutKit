@@ -17,7 +17,7 @@ final class SimpleMockContext: PlanOutOpContext {
         return value
     }
 
-    func set(_ name: String, value: Any) {
+    func set(_ name: String, value: Any) throws {
         // no op
     }
 
