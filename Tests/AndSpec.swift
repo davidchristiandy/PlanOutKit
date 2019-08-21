@@ -55,7 +55,34 @@ final class AndSpec: QuickSpec {
                     expect { result = try op.execute(args, ctx) }.toNot(throwError())
                     expect(result!) == false
                 }
+
+                it("returns false if at least one evaluated result is nil") {
+                    let values: [Any] = ["a", "b", "c"]
+                    let args: [String: Any] = [PlanOutOperation.Keys.values.rawValue: values]
+                    let ctx = NilMockContext()
+                    var result: Bool?
+
+                    expect { result = try op.execute(args, ctx) }.toNot(throwError())
+                    expect(result!) == false
+                }
             }
         }
     }
+}
+
+private struct NilMockContext: PlanOutOpContext {
+    var experimentSalt: String = ""
+
+    func evaluate(_ value: Any) throws -> Any? {
+        // always return nil when encountering "b" string.
+        if let stringValue = value as? String, stringValue == "b" {
+            return nil
+        }
+        return value
+    }
+
+    func set(_ name: String, value: Any) throws {}
+    func get(_ name: String) throws -> Any? { return nil }
+    func get<T>(_ name: String, defaultValue: T) throws -> T { return defaultValue }
+    func getParams() throws -> [String : Any] { return [:] }
 }

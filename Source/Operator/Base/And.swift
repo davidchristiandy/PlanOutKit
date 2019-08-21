@@ -15,8 +15,13 @@ extension PlanOutOperation {
             }
 
             for value in values {
-                if let evaluated = try context.evaluate(value),
-                    !Literal(evaluated).boolValue {
+                let evaluated: Any? = try context.evaluate(value)
+
+                guard evaluated != nil else {
+                    return false
+                }
+
+                if let result = evaluated, !Literal(result).boolValue {
                     return false
                 }
             }
