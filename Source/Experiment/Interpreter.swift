@@ -130,7 +130,7 @@ extension Interpreter: PlanOutOpContext {
             return numericValue as? T ?? defaultValue
         }
 
-        return value as? T ?? defaultValue
+        return (value as? T) ?? defaultValue
     }
 
     func getParams() throws -> [String: Any] {
