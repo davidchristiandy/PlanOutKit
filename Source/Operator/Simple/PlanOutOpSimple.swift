@@ -10,7 +10,7 @@
 ///
 /// Operator will evaluate all arguments recursively through `PlanOutOpContext`, before simpleExecute is called.
 protocol PlanOutOpSimple: PlanOutOp {
-    func simpleExecute(_ args: [String: Any], _ context: PlanOutOpContext) throws -> ResultType?
+    func simpleExecute(_ args: [String: Any?], _ context: PlanOutOpContext) throws -> ResultType?
 }
 
 extension PlanOutOpSimple {
@@ -21,11 +21,12 @@ extension PlanOutOpSimple {
     ///   - context: PlanOut operation context
     /// - Returns: Value from executed operation
     /// - Throws: OperationError
-    func execute(_ args: [String: Any], _ context: PlanOutOpContext) throws -> ResultType? {
+    func execute(_ args: [String: Any?], _ context: PlanOutOpContext) throws -> ResultType? {
         // evaluate all arguments first.
-        var evaluatedArgs: [String: Any] = [:]
+        var evaluatedArgs: [String: Any?] = [:]
         try args.forEach { key, value in
-            evaluatedArgs[key] = try context.evaluate(value)
+            let evaluatedValue = try context.evaluate(value)
+            evaluatedArgs.updateValue(evaluatedValue, forKey: key)
         }
 
         return try simpleExecute(evaluatedArgs, context)
