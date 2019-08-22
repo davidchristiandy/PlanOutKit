@@ -13,19 +13,19 @@ final class Interpreter {
     var experimentSalt: String
 
     /// Unit input data with injected unit identifier.
-    var inputs: [String: Any]
+    var inputs: [String: Any?]
 
-    var overrides: [String: Any]
+    var overrides: [String: Any?]
 
     /// The experiment script,
-    let serialization: [String: Any]
+    let serialization: [String: Any?]
 
     // MARK: Private properties
 
     /// Stores assignment parameters from experiment evaluation.
     ///
     /// This value is accessible through getParams() method, which will force the interpreter to evaluate experiment script in case if it is not yet evaluated.
-    private var data: [String: Any]
+    private var data: [String: Any?]
 
     /// Indicates whether the interpreter has finished evaluating the value.
     private var evaluated: Bool = false
@@ -47,7 +47,7 @@ final class Interpreter {
         case experimentSalt = "experiment_salt"
     }
 
-    init(serialization: [String: Any] = [:], salt: String = "", unit: Unit = Unit()) {
+    init(serialization: [String: Any?] = [:], salt: String = "", unit: Unit = Unit()) {
         self.serialization = serialization
         experimentSalt = salt
 
@@ -86,7 +86,7 @@ final class Interpreter {
 
 extension Interpreter: PlanOutOpContext {
     @discardableResult
-    func evaluate(_ value: Any) throws -> Any? {
+    func evaluate(_ value: Any?) throws -> Any? {
         switch PlanOutExpression(value: value) {
         case .operation(let operation, let args):
             // execute operation using self as context.
@@ -118,7 +118,13 @@ extension Interpreter: PlanOutOpContext {
         }
 
         // try to return values from the evaluated params first, and then coalesce to input if the value doesn't exist.
-        return data[name] ?? inputs[name]
+        if let optionalDataValue = data[name] {
+            return optionalDataValue
+        } else if let optionalInputValue = inputs[name] {
+            return optionalInputValue
+        }
+
+        return nil
     }
 
     func get<T>(_ name: String, defaultValue: T) throws -> T {
@@ -138,18 +144,18 @@ extension Interpreter: PlanOutOpContext {
         return try self.get(ReservedNames.data.rawValue, defaultValue: [:])
     }
 
-    func set(_ name: String, value: Any) throws {
+    func set(_ name: String, value: Any?) throws {
         // allow changing reserved values
         if let reserved = ReservedNames(rawValue: name) {
             switch reserved {
             case .data:
-                guard let dictionaryValue = value as? [String: Any] else {
+                guard let dictionaryValue = value as? [String: Any?] else {
                     return
                 }
                 self.data = dictionaryValue
 
             case .overrides:
-                guard let dictionaryValue = value as? [String: Any] else {
+                guard let dictionaryValue = value as? [String: Any?] else {
                     return
                 }
                 self.overrides = dictionaryValue
@@ -172,9 +178,12 @@ extension Interpreter: PlanOutOpContext {
             // modify arguments with added salt parameter.
             // add salt value if it does not exist yet, with variable name as salt.
             let saltedArgs = tuple.args.merging([PlanOutOperation.Keys.salt.rawValue: name]) { current, _ in current }
-            data[name] = try tuple.op.executeOp(args: saltedArgs, context: self)
+            let value = try tuple.op.executeOp(args: saltedArgs, context: self)
+            // updateValue is used here to allow nil values to be assigned to a key. Even if the value is explicitly declared as Optional, directly assigning values via subscript will remove that key from the dictionary entries.
+            data.updateValue(value, forKey: name)
         } else {
-            data[name] = value
+            // for other cases, assign the value directly to the dictionary.
+            data.updateValue(value, forKey: name)
         }
     }
 }

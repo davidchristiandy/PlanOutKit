@@ -7,15 +7,15 @@
 //
 
 enum PlanOutExpression {
-    case operation(op: PlanOutExecutable, args: [String: Any])
-    case list([Any])
-    case literal(Any)
+    case operation(op: PlanOutExecutable, args: [String: Any?])
+    case list([Any?])
+    case literal(Any?)
 
-    init(value: Any) {
-        if let dictionaryValue = value as? [String: Any],
+    init(value: Any?) {
+        if let dictionaryValue = value as? [String: Any?],
             let operation = PlanOutOperation.resolve(dictionaryValue) {
             self = .operation(op: operation, args: dictionaryValue)
-        } else if let arrayValue = value as? [Any] {
+        } else if let arrayValue = value as? [Any?] {
             self = .list(arrayValue)
         } else {
             self = .literal(value)
@@ -38,12 +38,12 @@ public protocol PlanOutOpContext: ReadableAssignment {
     /// - Returns: Evaluated value, which can be null.
     /// - Throws: OperationError
     @discardableResult
-    func evaluate(_ value: Any) throws -> Any?
+    func evaluate(_ value: Any?) throws -> Any?
 
     /// Registers a variable to the assignment.
     ///
     /// - Parameters:
     ///   - name: The variable name
     ///   - value: The variable value
-    func set(_ name: String, value: Any) throws
+    func set(_ name: String, value: Any?) throws
 }

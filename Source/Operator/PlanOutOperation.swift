@@ -42,7 +42,7 @@ enum PlanOutOperation: String {
     case weightedChoice
     case sample
 
-    static func resolve(_ data: [String: Any]) -> PlanOutExecutable? {
+    static func resolve(_ data: [String: Any?]) -> PlanOutExecutable? {
         guard let operationType = data[Keys.op.rawValue] as? String else {
             return nil
         }

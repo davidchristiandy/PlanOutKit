@@ -30,5 +30,5 @@ public protocol ReadableAssignment {
     ///
     /// - Returns: Dictionary of evaluated values
     /// - Throws: OperationError
-    func getParams() throws -> [String: Any]
+    func getParams() throws -> [String: Any?]
 }
