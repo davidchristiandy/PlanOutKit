@@ -19,10 +19,10 @@ enum Literal {
     case boolean(Bool)
 
     /// Array literal representation.
-    case list([Any])
+    case list([Any?])
 
     /// Dictionary representation based on compiled PlanOut script.
-    case dictionary([String: Any])
+    case dictionary([String: Any?])
 
     /// Other values that are not representable by literal types.
     case nonLiteral
@@ -44,6 +44,14 @@ enum Literal {
         default:
             self = .nonLiteral
         }
+    }
+
+    private init?(_ optionalValue: Any?) {
+        guard let value = optionalValue else {
+            return nil
+        }
+
+        self.init(value)
     }
 }
 
@@ -96,17 +104,7 @@ extension Literal: Equatable {
             // For a dictionary literal to equal to each other, it should have:
             // - The same set of keys.
             // - Equal values for the given the keys.
-            if Set(left.keys) != Set(right.keys) {
-                return false
-            }
-
-            for (key, value) in left {
-                // Note: It is not possible for right[key] to be nil, given that we've ensured that both left and right keys should match each other.
-                if let rightValue = right[key], Literal(value) != Literal(rightValue) {
-                    return false
-                }
-            }
-            return true
+            return left.mapValues { Literal($0) } == right.mapValues { Literal($0) }
 
         // for boolean vs other types, compare against their boolValues
         case (boolean(let left), _):

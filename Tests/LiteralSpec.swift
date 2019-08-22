@@ -242,6 +242,22 @@ final class LiteralSpec: QuickSpec {
                         expect(Literal(a) == Literal(b)) == true
                     }
 
+                    context("given nil entries") {
+                        it("returns true if the arrays equal to each other") {
+                            let a: [Int?] = [1, 2, nil, 3, nil]
+                            let b: [Int?] = [1, 2, nil, 3, nil]
+
+                            expect(Literal(a) == Literal(b)) == true
+                        }
+
+                        it("returns false if the order of the entries is different") {
+                            let a: [Int?] = [1, 2, nil, 3, nil]
+                            let b: [Int?] = [1, 2, nil, nil, 3]
+
+                            expect(Literal(a) == Literal(b)) == false
+                        }
+                    }
+
                     it("should have transitive property") {
                         let a: [Any] = [1.0, 2, 3.0]
                         let b: [Any] = [1, 2.0, 3]
@@ -292,6 +308,21 @@ final class LiteralSpec: QuickSpec {
                         expect(Literal(a) == Literal(b)) == true
                     }
 
+                    context("given nil entries within the dictionary values") {
+                        it("returns true if the dictionaries have matching values") {
+                            let a: [String: Any?] = ["foo": 1.0, "bar": 2, "baz": nil]
+                            let b: [String: Any?] = ["foo": 1, "baz": nil, "bar": 2.0]
+
+                            expect(Literal(a) == Literal(b)) == true
+                        }
+                        it("returns false if dictionary with null value is compared with nonexistent key") {
+                            let a: [String: Any?] = ["foo": 1.0, "bar": 2, "baz": nil]
+                            let b: [String: Any?] = ["foo": 1, "bar": 2.0]
+
+                            expect(Literal(a) == Literal(b)) == false
+                        }
+                    }
+
                     it("has transitive property") {
                         let a: [String: Any] = ["foo": 1, "bar": 2]
                         let b: [String: Any] = ["foo": 1]
@@ -338,7 +369,54 @@ final class LiteralSpec: QuickSpec {
                             }
                         }
                     }
+
+                    context("when comparing string literal to boolean literal") {}
+                    context("when comparing numeric literal to boolean literal") {}
+                    context("when comparing dictionary literal to boolean literal") {}
+                    context("when comparing dictionary literal to boolean literal") {}
+                    context("when comparing non-literal to boolean literal") {}
                 }
+
+                context("when comparing any literal to boolean literals") {
+                    // further tests on converting literal to boolValue is covered in the boolean value conversion section.
+
+                    it("returns true if literal bool value matches with boolean literal") {
+                        let value1 = Literal([1, 2, 3])
+                        let bool1 = Literal(true)
+
+                        expect(value1 == bool1) == true
+
+                        let value2 = Literal("")
+                        let bool2 = Literal(false)
+
+                        expect (value2 == bool2) == true
+                    }
+
+                    it("returns true if literal bool value does not match") {
+                        let value1 = Literal("")
+                        let bool1 = Literal(true)
+
+                        expect(value1 == bool1) == false
+
+                        let value2 = Literal([1, 2, 3])
+                        let bool2 = Literal(false)
+
+                        expect (value2 == bool2) == false
+                    }
+
+                    it("has transitive property") {
+                        let value1 = Literal([1, 2, 3])
+                        let bool1 = Literal(true)
+
+                        expect(value1 == bool1) == (bool1 == value1)
+
+                        let value2 = Literal([1, 2, 3])
+                        let bool2 = Literal(false)
+
+                        expect(value2 == bool2) == (bool2 == value2)
+                    }
+                }
+
                 context("when comparing non-literals") {
                     it("always evaluates to false regardless of actual contents") {
                         let a = Literal(Foo())
@@ -392,6 +470,15 @@ final class LiteralSpec: QuickSpec {
                         expect { jsonData = try JSONEncoder().encode(Literal(value)) }.toNot(throwError())
                         expect(jsonData!).to(equal(valueData))
                     }
+
+                    it("should be able to encode array with nil entries") {
+                        let value: [String: [String?]] = ["data": ["asd", "123", nil, "456"]]
+                        let valueData = try! JSONEncoder().encode(value)
+                        var jsonData: Data?
+
+                        expect { jsonData = try JSONEncoder().encode(Literal(value)) }.toNot(throwError())
+                        expect(jsonData!).to(equal(valueData))
+                    }
                 }
                 context("when encoding dictionary literals") {
                     it("produces the same output as the directly encoded raw value") {
@@ -407,6 +494,15 @@ final class LiteralSpec: QuickSpec {
                         let value: [String: Any] = ["data": Foo()]
 
                         expect { try JSONEncoder().encode(Literal(value)) }.to(throwError(errorType: OperationError.self))
+                    }
+
+                    it("should be able to encode dictionary with nil entries") {
+                        let value = ["data": 1, "data-2": 3.0, "data-3": nil, "data-4": 5]
+                        let valueData = try! JSONEncoder().encode(value)
+                        var jsonData: Data?
+
+                        expect { jsonData = try JSONEncoder().encode(Literal(value)) }.toNot(throwError())
+                        expect(jsonData!).to(equal(valueData))
                     }
                 }
 
