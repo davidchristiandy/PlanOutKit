@@ -9,16 +9,22 @@
 extension PlanOutOperation {
     /// Simple if-then operation. `then` value is returned if the `if` value evaluates to true.
     final class Condition: PlanOutOp {
-        func execute(_ args: [String : Any], _ context: PlanOutOpContext) throws -> Any? {
-            guard let ifValue = args[Keys.ifCondition.rawValue],
-                let thenValue = args[Keys.thenCondition.rawValue] else {
-                    throw OperationError.missingArgs(args: "\(Keys.ifCondition.rawValue), \(Keys.thenCondition.rawValue)", type: self)
+        func execute(_ args: [String : Any?], _ context: PlanOutOpContext) throws -> Any? {
+            // return nil immediately when the if condition does not exist in the first place.
+            guard let optionalIfValue = args[Keys.ifCondition.rawValue] else {
+                return nil
             }
 
-            if let evaluatedIfValue = try context.evaluate(ifValue), Literal(evaluatedIfValue).boolValue {
-                return try context.evaluate(thenValue)
+            // only evaluate the `then` value if:
+            // - the `if` value can be evaluated, nonnull, and has bool value that equals to true.
+            if let optionalThenValue = args[Keys.thenCondition.rawValue],
+                let evaluatedIfValue = try context.evaluate(optionalIfValue),
+                Literal(evaluatedIfValue).boolValue == true {
+
+                return try context.evaluate(optionalThenValue)
             }
 
+            // otherwise, return nil for other cases.
             return nil
         }
     }

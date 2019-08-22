@@ -12,7 +12,7 @@ extension PlanOutOperation {
     /// Obtain values from the provided context.
     final class Get: PlanOutOp {
         func execute(_ args: [String: Any], _ context: PlanOutOpContext) throws -> Any? {
-            guard let value = args[Keys.variable.rawValue] else {
+            guard let optionalValue = args[Keys.variable.rawValue], let value = optionalValue else {
                 throw OperationError.missingArgs(args: "var", type: self)
             }
 
