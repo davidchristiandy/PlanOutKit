@@ -118,10 +118,10 @@ extension Interpreter: PlanOutOpContext {
         }
 
         // try to return values from the evaluated params first, and then coalesce to input if the value doesn't exist.
-        if let optionalDataValue = data[name] {
-            return optionalDataValue
-        } else if let optionalInputValue = inputs[name] {
-            return optionalInputValue
+        if let optionalDataValue = data[name], let dataValue = optionalDataValue {
+            return dataValue
+        } else if let optionalInputValue = inputs[name], let inputValue = optionalInputValue {
+            return inputValue
         }
 
         return nil
