@@ -21,13 +21,13 @@ public struct ExposureLog: Encodable {
     public let name: String
     public let salt: String
     public let checksum: String
-    public let inputs: [String: Any]
-    public let params: [String: Any]
+    public let inputs: [String: Any?]
+    public let params: [String: Any?]
 
     private let encodableInputs: Literal
     private let encodableParams: Literal
 
-    init(experiment: Experiment, inputs: [String: Any], params: [String: Any]) {
+    init(experiment: Experiment, inputs: [String: Any?], params: [String: Any?]) {
         self.inputs = inputs
         self.params = params
 

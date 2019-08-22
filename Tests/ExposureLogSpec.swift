@@ -51,6 +51,17 @@ final class ExposureLogSpec: QuickSpec {
 
                 expect(String(data: data!, encoding: .utf8)).toNot((beNil()))
             }
+
+            it("is correctly parsed to JSON") {
+                let nullableParams: [String: Any?] = ["foo": 1, "bar": nil, "baz": true]
+                let nullableInputs: [String: Any?] = ["userid": nil]
+
+                let log = ExposureLog(experiment: exp, inputs: nullableInputs, params: nullableParams)
+                var data: Data? = nil
+                expect { data = try JSONEncoder().encode(log) }.toNot(throwError())
+
+                expect(String(data: data!, encoding: .utf8)).toNot((beNil()))
+            }
         }
     }
 }
