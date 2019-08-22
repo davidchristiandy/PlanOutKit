@@ -15,7 +15,9 @@ extension PlanOutOperation {
     final class Length: PlanOutOpUnary {
         typealias ResultType = Int // Length cannot be fractional.
 
-        func unaryExecute(_ value: Any) throws -> Int? {
+        func unaryExecute(_ value: Any?) throws -> Int? {
+            guard let value = value else { return 0 }
+
             switch Literal(value) {
             case .string(let stringValue):
                 return stringValue.count

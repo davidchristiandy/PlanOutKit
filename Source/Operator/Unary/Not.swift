@@ -11,7 +11,9 @@ extension PlanOutOperation {
     final class Not: PlanOutOpUnary {
         typealias ResultType = Bool
 
-        func unaryExecute(_ value: Any) throws -> Bool? {
+        func unaryExecute(_ value: Any?) throws -> Bool? {
+            guard let value = value else { return false }
+
             return !Literal(value).boolValue
         }
     }
