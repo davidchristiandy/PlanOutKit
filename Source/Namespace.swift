@@ -51,9 +51,11 @@ public class Namespace {
                          overrides: [String: Any] = [:],
                          totalSegments: Int,
                          customSalt: String? = nil,
-                         logger: PlanOutLogger? = nil) {
+                         logger: PlanOutLogger? = nil) throws {
         // TODO: throw errors instead of asserts.
-        assert(unitKeys.count > 0, "Unit keys must have at least one element.")
+        guard unitKeys.count > 0 else {
+            throw NamespaceError.missingUnitKeys
+        }
 
         self.name = name
         self.salt = customSalt ?? name
@@ -72,11 +74,13 @@ extension Namespace {
     /// - Parameters:
     ///   - identifier: The name of the experiment definition.
     ///   - serializedScript: The serialized PlanOut script for the experiment.
-    public func defineExperiment(identifier: String, serializedScript: String) {
+    public func defineExperiment(identifier: String, serializedScript: String, isDefaultExperiment: Bool = false) throws {
         // TODO: throw errors instead of asserts.
-        assert(definitions[identifier] == nil, "Duplicate experiment definition found with id: \(identifier)")
+        guard definitions[identifier] == nil else {
+            throw NamespaceError.duplicateDefinition(identifier)
+        }
 
-        definitions[identifier] = ExperimentDefinition(identifier, serializedScript)
+        definitions[identifier] = ExperimentDefinition(identifier, serializedScript, isDefault: isDefaultExperiment)
     }
 
     /// Allocates an experiment instance to a number of segments.
@@ -87,7 +91,9 @@ extension Namespace {
     ///   - name: The name for the experiment instance.
     ///   - definition: The ExperimentDefinition used for the instance.
     ///   - segmentCount: The number of segments that should be allocated for this instance.
-    public func addExperiment(name: String, definition: ExperimentDefinition, segmentCount: Int) throws {
+    public func addExperiment(name: String, definitionId: String, segmentCount: Int) throws {
+        guard let definition = definitions[definitionId] else { return }
+
         try segmentAllocator.allocate(name, segmentCount)
 
         let experimentName = "\(self.name)-\(name)"
@@ -105,7 +111,9 @@ extension Namespace {
     ///   - name: The name for the experiment instance.
     ///   - definition: The ExperimentDefinition used for the instance.
     ///   - segments: An array of segments that is allocated for this instance.
-    public func addExperiment(name: String, definition: ExperimentDefinition, segments: [Int]) throws {
+    public func addExperiment(name: String, definitionId: String, segments: [Int]) throws {
+        guard let definition = definitions[definitionId] else { return }
+
         try segmentAllocator.allocate(name, segments: segments)
 
         let experimentName = "\(self.name)-\(name)" // Is this required?
