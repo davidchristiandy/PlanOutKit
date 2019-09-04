@@ -19,9 +19,8 @@ Pod::Spec.new do |spec|
     "David Christiandy" => "david.christiandy@gmail.com",
     "Irvi Aini" => "irvi.fa@gmail.com"
   }
-  spec.platform       = :ios, "10.3"
+  spec.platform       = :ios, "10.0"
   spec.swift_version  = "5.0"
   spec.source       = { :git => "git@github.com:traveloka/PlanOutKit.git", :tag => "#{spec.version}" }
-  # spec.source       = { :git => "https://github.com/traveloka/PlanOutKit", :tag => "#{spec.version}" }
   spec.source_files  = "Source/**/*.swift"
 end
